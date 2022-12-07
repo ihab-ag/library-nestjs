@@ -9,8 +9,14 @@ import { User, UserDocument } from './user.schema';
 export class UserService {
   constructor(@InjectModel(User.name) private UserModel: Model<UserDocument>) {}
 
-  create(createUserInput: CreateUserInput) {
-    return `This action adds a new user`;
+  create(createUserInput: CreateUserInput): Promise<User> {
+    const user = new this.UserModel(createUserInput);
+    return user.save();
+  }
+
+  async findUsername(username: string): Promise<User> {
+    const user = await this.UserModel.findOne({ username }).exec();
+    return user;
   }
 
   findOne(id: number) {
