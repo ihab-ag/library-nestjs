@@ -5,6 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
     UserModule,
-    MongooseModule.forRoot('mongodb://localhost/library')]
+    MongooseModule.forRoot(process.env.MONGO_URI)]
 })
 export class AppModule {}
