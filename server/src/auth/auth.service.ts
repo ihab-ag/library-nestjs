@@ -1,4 +1,6 @@
 import { Injectable } from "@nestjs/common";
+import { UserCredentialsInput } from "src/user/dto/user-credentials.input";
+import { User } from "src/user/user.schema";
 import { UserService } from "src/user/user.service";
 
 
@@ -14,4 +16,9 @@ export class AuthService {
         }
         return null;
     }
+
+    async signup(userCredentialsInput: UserCredentialsInput): Promise<User> {
+        return this.userService.create(userCredentialsInput);
+    }
+
 }
