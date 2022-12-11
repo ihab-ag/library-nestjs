@@ -11,13 +11,14 @@ export class ClientsService {
 
   constructor(@InjectModel(Client.name) private readonly ClientModel: Model<ClientDocument>) {}
 
-  create(createClientInput: CreateClientInput) {
+  create(createClientInput: CreateClientInput): Promise<Client> {
     const createdClient = new this.ClientModel(createClientInput);
     return createdClient.save();
   }
 
-  findAll() {
-    return `This action returns all clients`;
+  async findAll(): Promise<Client[]> {
+    const clients = await this.ClientModel.find().exec();
+    return clients;
   }
 
   findOne(id: string) {
