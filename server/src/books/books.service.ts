@@ -21,7 +21,8 @@ export class BooksService {
   }
 
   findAll() {
-    return `This action returns all books`;
+    const books = this.bookModel.find().exec();
+    return books;
   }
 
   findOne(id: number) {
