@@ -10,24 +10,25 @@ import { UpdateClientInput } from './dto/update-client.input';
 export class ClientsService {
 
   constructor(@InjectModel(Client.name) private readonly ClientModel: Model<ClientDocument>) {}
-  
+
   create(createClientInput: CreateClientInput) {
-    
+    const createdClient = new this.ClientModel(createClientInput);
+    return createdClient.save();
   }
 
   findAll() {
     return `This action returns all clients`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} client`;
   }
 
-  update(id: number, updateClientInput: UpdateClientInput) {
+  update(id: string, updateClientInput: UpdateClientInput) {
     return `This action updates a #${id} client`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} client`;
   }
 }
