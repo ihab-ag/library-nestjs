@@ -4,14 +4,20 @@ import { Model } from 'mongoose';
 import { Book, BookDocument } from './books.schema';
 import { CreateBookInput } from './dto/create-book.input';
 import { UpdateBookInput } from './dto/update-book.input';
+import { Status } from './entities/status.enum';
 
 @Injectable()
 export class BooksService {
 
   constructor(@InjectModel(Book.name) private bookModel: Model<BookDocument>) {}
-  
+
   create(createBookInput: CreateBookInput) {
-    return 'This action adds a new book';
+    const createdBook = new this.bookModel({
+      ...createBookInput,
+      status: Status.Available,
+      client_id: null
+    });
+    return createdBook.save();
   }
 
   findAll() {
