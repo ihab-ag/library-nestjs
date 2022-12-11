@@ -9,7 +9,7 @@ import { Status } from './entities/status.enum';
 @Injectable()
 export class BooksService {
 
-  constructor(@InjectModel(Book.name) private bookModel: Model<BookDocument>) {}
+  constructor(@InjectModel(Book.name) private bookModel: Model<BookDocument>) { }
 
   create(createBookInput: CreateBookInput) {
     const createdBook = new this.bookModel({
@@ -29,9 +29,14 @@ export class BooksService {
     const book = this.bookModel.findById(id).exec();
     return book;
   }
+  
+  findByClientId(client_id: string) {
+    const books = this.bookModel.find({ client_id }).exec();
+    return books;
+  }
 
   update(id: string, updateBookInput: UpdateBookInput) {
-    const updated_book = this.bookModel.findByIdAndUpdate(id, {...updateBookInput}, { new: true }).exec();
+    const updated_book = this.bookModel.findByIdAndUpdate(id, { ...updateBookInput }, { new: true }).exec();
     return updated_book;
   }
 
