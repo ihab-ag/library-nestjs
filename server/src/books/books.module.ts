@@ -10,6 +10,7 @@ import { ClientsModule } from 'src/clients/clients.module';
     MongooseModule.forFeature([{ name: Book.name, schema: BookSchema }]),
     forwardRef(() => ClientsModule)
   ],
-  providers: [BooksResolver, BooksService]
+  providers: [BooksResolver, BooksService],
+  exports: [BooksService]
 })
 export class BooksModule {}
