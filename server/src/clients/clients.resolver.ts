@@ -5,8 +5,15 @@ import { CreateClientInput } from './dto/create-client.input';
 import { UpdateClientInput } from './dto/update-client.input';
 import { BooksService } from 'src/books/books.service';
 import { Book } from 'src/books/entities/book.entity';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/user/entities/role.enum';
+import { UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
+@Roles(Role.Admin)
 @Resolver(() => Client)
+@UseGuards(JwtGuard, RolesGuard)
 export class ClientsResolver {
   constructor(
     private readonly clientsService: ClientsService,
