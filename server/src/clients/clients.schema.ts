@@ -13,6 +13,7 @@ export class Client {
 
     @Prop({
         required: true,
+        unique: true,
     })
     email: string
 
