@@ -4,8 +4,15 @@ import { Book } from './entities/book.entity';
 import { CreateBookInput } from './dto/create-book.input';
 import { UpdateBookInput } from './dto/update-book.input';
 import { ClientsService } from 'src/clients/clients.service';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from 'src/user/entities/role.enum';
+import { UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guards/jwt.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
+@Roles(Role.Admin)
 @Resolver(() => Book)
+@UseGuards(JwtGuard, RolesGuard)
 export class BooksResolver {
   constructor(
     private readonly booksService: BooksService,
