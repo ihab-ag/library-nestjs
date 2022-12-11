@@ -21,8 +21,8 @@ export class ClientsService {
     return clients;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} client`;
+  findOne(id: string): Promise<Client> {
+    return this.ClientModel.findById(id).exec();
   }
 
   update(id: string, updateClientInput: UpdateClientInput) {
