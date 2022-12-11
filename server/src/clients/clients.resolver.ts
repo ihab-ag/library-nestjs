@@ -1,12 +1,17 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { ClientsService } from './clients.service';
 import { Client } from './entities/client.entity';
 import { CreateClientInput } from './dto/create-client.input';
 import { UpdateClientInput } from './dto/update-client.input';
+import { BooksService } from 'src/books/books.service';
+import { Book } from 'src/books/entities/book.entity';
 
 @Resolver(() => Client)
 export class ClientsResolver {
-  constructor(private readonly clientsService: ClientsService) {}
+  constructor(
+    private readonly clientsService: ClientsService,
+    private readonly booksService: BooksService
+    ) {}
 
   @Mutation(() => Client)
   createClient(@Args('createClientInput') createClientInput: CreateClientInput) {
@@ -31,5 +36,10 @@ export class ClientsResolver {
   @Mutation(() => Client)
   removeClient(@Args('id') id: string) {
     return this.clientsService.remove(id);
+  }
+
+  @ResolveField(() => [Book])
+  books(@Parent() client: Client) {
+    return this.booksService.findByClientId(client.id);
   }
 }
