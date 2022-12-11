@@ -26,7 +26,7 @@ export class ClientsService {
   }
 
   update(id: string, updateClientInput: UpdateClientInput) {
-    return `This action updates a #${id} client`;
+    return this.ClientModel.findByIdAndUpdate(id, updateClientInput, { new: true })
   }
 
   remove(id: string) {
