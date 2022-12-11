@@ -30,8 +30,9 @@ export class BooksService {
     return book;
   }
 
-  update(id: number, updateBookInput: UpdateBookInput) {
-    return `This action updates a #${id} book`;
+  update(id: string, updateBookInput: UpdateBookInput) {
+    const updated_book = this.bookModel.findByIdAndUpdate(id, {...updateBookInput}, { new: true }).exec();
+    return updated_book;
   }
 
   remove(id: number) {
